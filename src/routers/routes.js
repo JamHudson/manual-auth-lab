@@ -1,6 +1,8 @@
 import express from "express";
 import authCtl from "../controllers/auth.controller.js";
 import pageCtl from "../controllers/page.controller.js";
+// eslint-disable-next-line no-duplicate-imports
+import { isLoggedIn, hasRole } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
@@ -12,7 +14,7 @@ router.post("/login", authCtl.login);
 router.get("/register", authCtl.registerPage);
 router.post("/register", authCtl.register);
 
-router.get("/dashboard", pageCtl.dashboardPage);
-router.get("/admin", pageCtl.adminPage);
+router.get("/dashboard", isLoggedIn, pageCtl.dashboardPage);
+router.get("/admin", isLoggedIn, hasRole("admin"), pageCtl.adminPage);
 
 export default router;

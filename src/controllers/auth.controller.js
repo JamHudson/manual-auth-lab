@@ -59,4 +59,21 @@ const login = async (req, res) => {
     return res.redirect("/dashboard");
 };
 
+// eslint-disable-next-line consistent-return
+export const isLoggedIn = (req, res, next) => {
+    if (!req.user) {
+        return res.redirect("/login?errors=Please log in first");
+    }
+    next();
+};
+
+// eslint-disable-next-line consistent-return
+export const hasRole = (role) => (req, res, next) => 
+    {
+        if (!req.user || req.user.role !== role) {
+            return res.redirect("/login?errors=Access Denied");
+        }
+        next();
+    }
+
 export default { loginPage, registerPage, register, login };
