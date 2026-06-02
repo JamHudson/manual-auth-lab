@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 import defaultRouter from './routers/routes.js';
 
 //configure Express.js app
@@ -14,6 +15,12 @@ app.use(express.static('public'));
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
 
 //routers
 app.use("/", defaultRouter);
