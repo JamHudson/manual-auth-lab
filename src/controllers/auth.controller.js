@@ -22,7 +22,7 @@ const register = async (req, res) => {
     }
 
     await createUser(username, password, role);
-    res.redirect("/login");
+    return res.redirect("/login");
 };
 
 const login = async (req, res) => {
@@ -34,7 +34,7 @@ const login = async (req, res) => {
         return res.redirect("/login?errors=Invalid credentials");
     }
 
-    res.redirect("/dashboard");
+    return res.redirect("/dashboard");
 };
 
 export default { loginPage, registerPage, register, login };
